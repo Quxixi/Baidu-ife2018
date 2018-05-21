@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body>        
+    <input id="first-number" type="number" value="0" placeholder="第一个数字">
+    <input id="second-number" type="number" value="0" placeholder="第二个数字">
+    <button id="add-btn"  onclick="resultNumber('add');">加</button>
+    <button id="minus-btn" onclick="resultNumber('minus');">减</button>
+    <button id="times-btn" onclick="resultNumber('times');">乘</button>
+    <button id="divide-btn" onclick="resultNumber('divide');">除</button>
+    <p id="result">运算结果</p>
+    <script>
+        
+        
+        let addBtn = document.getElementById('add-btn')
+        let minusBtn = document.getElementById('minus-btn')
+        let timesBtn = document.getElementById('times-btn')
+        let divideBtn = document.getElementById('divide-btn')
+        let resultT = document.getElementById('result').innerHTML
+
+       var add, minus, times, divide;
+       
+
+        function resultNumber(symbol){
+            let firstNumber = parseFloat(document.getElementById('first-number').value);
+            let secondNmuber = parseFloat(document.getElementById('second-number').value);
+           
+            switch (symbol) {
+                case 'add':
+                result = firstNumber + secondNmuber;    
+                    break;
+                case 'minus':
+                result = firstNumber - secondNmuber;    
+                    break;
+                case 'times':
+                result = firstNumber * secondNmuber;    
+                    break;
+                case 'divide':
+                result = firstNumber / secondNmuber;    
+                    break;
+            }
+            
+            document.getElementById('result').innerHTML = `运算结果: ${result}`;                
+        }
+
+       
+// //原始写法:
+//         addBtn.onclick = function(){
+//             let firstNumber = parseFloat(document.getElementById('first-number').value);
+//             let secondNmuber = parseFloat(document.getElementById('second-number').value);
+//             result = firstNumber + secondNmuber;
+//             document.getElementById('result').innerHTML = `运算结果: ${result}`;
+//         }
+
+//          minusBtn.onclick = function(){
+//             let firstNumber = parseFloat(document.getElementById('first-number').value);
+//             let secondNmuber = parseFloat(document.getElementById('second-number').value);
+//             result = firstNumber - secondNmuber;
+//             document.getElementById('result').innerHTML = `运算结果: ${result}`;
+//         }
+
+//          timesBtn.onclick = function(){
+//             let firstNumber = parseFloat(document.getElementById('first-number').value);
+//             let secondNmuber = parseFloat(document.getElementById('second-number').value);
+//             result = firstNumber * secondNmuber;
+//             document.getElementById('result').innerHTML = `运算结果: ${result}`;
+//         }
+
+//          divideBtn.onclick = function(){
+//             let firstNumber = parseFloat(document.getElementById('first-number').value);
+//             let secondNmuber = parseFloat(document.getElementById('second-number').value);
+//             result = firstNumber / secondNmuber;
+//             document.getElementById('result').innerHTML = `运算结果: ${result}`;
+//         }
+
+    </script>
+</body>
+</html>
