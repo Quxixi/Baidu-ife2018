@@ -1,0 +1,123 @@
+<!-- 监听事件初探 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+    <style>
+        select {
+            display: none;
+        }
+        #company-select{
+            
+        }
+    </style>
+</head>
+<body>            
+    <label>
+        <input id="school" name="status" type="radio">
+        School
+    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label>
+        <input id="company" name="status" type="radio">
+        Company
+    </label>
+    &nbsp;&nbsp;
+    
+    <input id="name" type="text">    
+    <button id="submit-btn">Submit</button>
+
+    <select id="school-select">        
+        <option>北京邮电大学</option>
+        <option>黑龙江大学</option>
+        <option>华中科技大学</option>
+    </select>
+
+    <select id="company-select">        
+        <option>百度</option>
+        <option>爱奇艺</option>        
+    </select>
+
+    <script>
+        // 当点击按钮 submit-btn 时，在console中输出 name 中的内容
+        // 在输入过程中，如果按回车键，则同样执行上一条的需求
+        // 在输入过程中，如果按 ESC 键，则把输入框中的内容清空
+
+        let btn = document.getElementById('submit-btn');
+
+        btn.onclick = function () {
+            let name = document.getElementById('name').value;
+            console.log(name);
+        }
+
+        // 同一个对象上同一个监听器: 原始写法
+        // document.onkeydown = function (event) {
+        //     let name = document.getElementById('name').value;
+        //     if (event.key=='Enter'){
+        //     console.log(name)
+        //     }
+        // }
+        // document.onkeydown = function (event) {
+        //     if (event.key=='Escape'){
+        //         document.getElementById('name').value = ''
+        //     }
+        // }
+
+        document.addEventListener('keydown', function (event) {
+            let name = document.getElementById('name').value;
+            if (event.key=='Enter'){
+            console.log(name)
+            }
+        })
+
+         document.addEventListener('keydown', function (event) {
+            if (event.key=='Escape'){
+                document.getElementById('name').value = ''
+            }
+        })
+
+        // 当用户选择了 School 的单选框时，显示 School 的下拉选项，隐藏 Company 的下拉选项
+        // 当用户选择了 School 的单选框时，显示 Company 的下拉选项，隐藏 School 的下拉选项
+
+        
+        let school = document.getElementById('school')
+        school.addEventListener('click', function(){
+            if(school.checked == true){
+            let schoolSelect = document.getElementById('school-select')
+            schoolSelect.style.display = 'block'
+            let companySelect = document.getElementById('company-select')
+            companySelect.style.display = 'none'
+        }}) 
+
+         let company = document.getElementById('company')
+         company.addEventListener('click', function(){
+            if(company.checked == true){
+            let schoolSelect = document.getElementById('company-select')
+            schoolSelect.style.display = 'block'
+            let companySelect = document.getElementById('school-select')
+            companySelect.style.display = 'none'
+        }}) 
+        
+        // 利用封装函数的方式优化代码(失败)
+        // 怎样用for循环的方式实现 三个点击
+        // var list = document.querySelectorAll("input[name]");
+        // for (let i = 0; i < list.length; i++) {
+        //     list[i].onclick = function(event){
+
+        //     }
+            
+        // }
+
+
+        
+        // let company = document.getElementById('company')
+        // conversion(company)
+
+
+        // 利用事件委托机制优化代码
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div id="fade-obj" style="width:300px;height:300px;background:#000"></div>
+    <button id="fade-btn">淡出</button>
+
+
+<!--点击按钮时，开始改变 fade-obj 的透明度，开始一个淡出（逐渐消失）动画，直到透明度为0
+    在动画过程中，按钮的状态变为不可点击
+    在动画结束后，按钮状态恢复，且文字变成“淡入”
+    在 按钮显示 淡入 的状态时，点击按钮，开始一个“淡入”（逐渐出现）的动画，和上面类似按钮不可点，直到透明度完全不透明
+    淡入动画结束后，按钮文字变为“淡出”
+    暂时不要使用 CSS animation （以后我们再学习） -->
+   
+   
+
+   <script>
+    // //    setTimeout实现
+    //     let alpha = 1
+    //     let x = 0
+    //     let btn = document.getElementById('fade-btn')
+    //     let obj = document.getElementById('fade-obj')
+    //     btn.addEventListener('click', colorChange)
+
+    //     function colorChange(){
+    //         if (btn.innerHTML == '淡出') {
+    //             colorMinus()
+    //         } else {
+    //             colorAdd()
+    //         }
+    //     }
+
+    //     function colorMinus(){
+    //         alpha -= 0.1
+    //         console.log(alpha)
+    //         obj.style.background = `rgba(0,0,0,${alpha})`;
+    //         btn.disabled = true
+    //         end1 = setTimeout(colorMinus, 500)
+    //         if(alpha < 0){
+    //             clearTimeout(end1)
+    //             // 再次调用folorMinus()时,alpha的值未重置,可能是闭包(这里的解决方案是手动更新alpha)
+    //             alpha = 1
+    //             btn.innerHTML = '淡入'
+    //             btn.disabled = false
+    //          }
+    //     }
+
+       
+    //         function colorAdd(){
+    //             x += 0.1
+    //             console.log(x)
+    //             obj.style.background = `rgba(0,0,0,${x})`;
+    //             end2 = setTimeout(colorAdd, 500)
+    //             btn.disabled = true
+    //             if(x > 1){
+    //                 clearTimeout(end2)
+    //                 btn.disabled = false
+    //                 // 再次调用colorAdd()时,x的值未重置,可能是闭包(这里的解决方案是手动更新x)
+    //                 x = 0
+    //                 btn.innerHTML = '淡出'
+    //         }}
+
+
+
+
+
+
+//    setInterval实现
+     
+        let btn = document.getElementById('fade-btn')
+        let obj = document.getElementById('fade-obj')
+        btn.addEventListener('click', colorChange)
+
+        function colorChange(){
+            if (btn.innerHTML == '淡出') {
+                colorMinus()
+            } else {
+                colorAdd()
+            }
+        }
+
+        function colorMinus(){
+            let alpha = 1
+            end1 = setInterval(
+            function(){
+                alpha -= 0.1
+                console.log(alpha)
+                obj.style.background = `rgba(0,0,0,${alpha})`;
+                btn.disabled = true
+                if(alpha < 0){
+                    clearInterval(end1)
+                    // 再次调用folorMinus()时,alpha的值未重置,可能是闭包(这里的解决方案是手动更新alpha)
+                    alpha = 1
+                    btn.innerHTML = '淡入'
+                    btn.disabled = false
+                } }   
+                , 500)
+            
+               
+             
+        }
+
+       
+            function colorAdd(){
+                let x = 0
+                end2 = setInterval(
+                function(){
+                    x += 0.1
+                    console.log(x)
+                    obj.style.background = `rgba(0,0,0,${x})`;
+                    btn.disabled = true
+                    if(x > 1){
+                        clearInterval(end2)
+                        btn.disabled = false
+                        // 再次调用colorAdd()时,x的值未重置,可能是闭包(这里的解决方案是手动更新x)
+                        x = 0
+                        btn.innerHTML = '淡出'
+                }}, 500)
+                }
+
+    </script>
+</body>
+</html>
