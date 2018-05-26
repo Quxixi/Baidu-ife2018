@@ -1,0 +1,58 @@
+<!-- CSS Sprite 定時器 實現幀動畫 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #face{
+            width: 480px;
+            height: 480px;
+            background: url("./face.jpg") no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="face" style="background-position:0px 0px"></div>
+</body>
+
+    <script>
+        window.onload = function(){
+            let face = document.getElementById('face')
+            let faceY = face.style.backgroundPositionY
+
+            
+
+            let faceDown = function(){
+                let down = setInterval(function(){
+                faceY = `${parseInt(faceY) + 480}px`
+                    face.style.backgroundPositionY = faceY
+                    console.log(faceY)
+                    if (faceY == '0px') {
+                        clearInterval(down)
+                        faceUp()
+                    }
+            }, 100)
+            }
+                    
+                
+            let faceUp = function(){
+                let up = setInterval(function(){
+                        faceY = `${parseInt(faceY) - 480}px`
+                        face.style.backgroundPositionY = faceY
+                        if(faceY == '-7680px'){
+                            clearInterval(up)
+                            faceDown()
+                        }
+                    
+                }, 100)
+                
+            }
+            faceUp()
+        }
+          
+    </script>
+</html>
