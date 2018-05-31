@@ -1,0 +1,262 @@
+<!-- 字符串以及正则表达式 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>String</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div>
+            <label>String A:
+                <input id="radio-a" type="radio" checked="true" name="str-obj" value="a">
+            </label>
+            <textarea id="str-a"></textarea>
+            <label>String B:
+                <input id="radio-b" type="radio" name="str-obj" value="b">
+            </label>
+            <textarea id="str-b"></textarea>        
+            <label>Num A：<input id="num-a" type="number" value="0"></label>
+            <label>Num B：<input id="num-b" type="number" value="1"></label>
+        </div>
+        <div>
+            <button>获取当前选中输入的内容长度</button>
+            <button>当前选中输入中的第3个字符</button>  
+            <button>把两个输入框的文字连接在一起输出（concat）</button>
+            <button>输出B中的内容在输入A的内容中第一次出现的位置（indexOf）</button>
+            <button>输输出A中的内容在B的内容中最后一次出现的位置（lastIndexOf）</button>
+            <button>使用slice获取选中输入框内容的部分内容，参数为num-a及num-b</button>
+            <button>当前选中输入框的行数</button>
+            <button>使用substr获取选中输入框内容的子字符串，参数为num-a及num-b</button>
+            <button>把所选输入框中的内容全部转为大写</button>
+            <button>把所选输入框中的内容全部转为小写</button>
+            <button>把所选输入框中内容的半角空格全部去除</button>
+            <button>把所选输入框中内容的a全部替换成另外一个输入框中的内容</button>
+        </div>
+        <p id="result"></p>
+</body>
+
+    <script>
+        window.onload = function(){
+            let btnBox = document.getElementsByTagName('button')
+            let result = document.getElementById('result')
+            btnBox[0].addEventListener('click', selectTool)
+            btnBox[1].addEventListener('click', stringThree)
+            btnBox[2].addEventListener('click', contentJoin)
+            btnBox[3].addEventListener('click', indexFirst)
+            btnBox[4].addEventListener('click', indexLast)
+            btnBox[5].addEventListener('click', sliceAtoB)
+            btnBox[6].addEventListener('click', getRows)
+            btnBox[7].addEventListener('click', substrAtoB)
+            btnBox[8].addEventListener('click', toUpper)
+            btnBox[9].addEventListener('click', toLower)
+            btnBox[10].addEventListener('click', deletSpace)
+            btnBox[11].addEventListener('click', replaceA)
+
+        //    判断选中的工具 && 获取当前选中输入的内容长度
+            function selectTool(){
+                let radioA = document.getElementById('radio-a').checked
+                let radioB = document.getElementById('radio-b').checked
+                let strA = document.getElementById('str-a').value
+                let strB = document.getElementById('str-b').value
+                if(radioA && strA){
+                    result.innerHTML = strA.length
+                    return 'A'
+                }else if(radioB && strB){
+                    result.innerHTML = strB.length
+                    return "B"
+                }else{
+                    result.innerHTML = '请在选中的输入框内输入文字'
+                    
+                }
+            }
+
+            // 当前选中输入中的第3个字符
+            function stringThree() {
+                let strA = document.getElementById('str-a').value
+                let strB = document.getElementById('str-b').value
+                
+                switch (selectTool()) {
+                    case "A":
+                    result.innerHTML = strA.charAt(2)
+                        break;
+                    case "B":
+                    result.innerHTML = strB.charAt(2)    
+                        break;
+                    default:
+                    result.innerHTML = '请在选中的输入框内输入文字'
+                        break;
+                }
+              
+            }
+
+            // 把两个输入框的文字连接在一起输出（concat）
+            function contentJoin() {
+                let strA = document.getElementById('str-a').value
+                let strB = document.getElementById('str-b').value
+                let strC = ''
+                if (strA && strB) {
+                    strC = strA + strB
+                    result.innerHTML = strC
+                }else{
+                    result.innerHTML = '需要输入的有两个空哦'
+                }
+            }
+            
+            // 输出B中的内容在输入A的内容中第一次出现的位置（indexOf）
+            function indexFirst() {
+                let strA = document.getElementById('str-a').value
+                let strB = document.getElementById('str-b').value
+                let strC = ''
+                if (strA && strB) {
+                    strC =  strA.indexOf(strB)
+                    result.innerHTML = strC + 1
+                }else{
+                    result.innerHTML = '需要输入的有两个空哦'
+                }
+            }
+
+
+             // 输出A中的内容在B的内容中最后一次出现的位置（lastIndexOf）
+             function indexLast() {
+                let strA = document.getElementById('str-a').value
+                let strB = document.getElementById('str-b').value
+                let strC = ''
+                if (strA && strB) {
+                    strC =  strB.lastIndexOf(strA)
+                    result.innerHTML = strC + 1
+                }else{
+                    result.innerHTML = '需要输入的有两个空哦'
+                }
+            }
+            
+            // 使用slice获取选中输入框内容的部分内容，参数为num-a及num-b
+            function sliceAtoB() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                let strC = ''
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    strC =  strA.slice(numA, numB)
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strA = document.getElementById('str-a').value
+                    strC =  strA.slice(numA, numB)
+                    result.innerHTML = strC
+                }
+            }
+            
+            // 当前选中输入框的行数(未完成, 仅仅使用正则匹配找出了多少个换行符,bug只有换行没有字符的也被算在其中)
+            function getRows(params) {
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    let strC = strA.split(/.\n/).length
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strB = document.getElementById('str-b').value
+                    let strC = strB.split(/.\n/).length
+                    result.innerHTML = strC
+                }else{
+                    result.innerHTML = '请在选中的输入框内输入文字'
+                }
+            }
+
+
+             // 使用substr获取选中输入框内容的子字符串，参数为num-a及num-b
+             function substrAtoB() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                let strC = ''
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    strC =  strA.substr(numA, numB)
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strB = document.getElementById('str-b').value
+                    strC =  strB.substr(numA, numB)
+                    result.innerHTML = strC
+                }
+            }
+
+
+            
+             // 把所选输入框中的内容全部转为大写
+             function toUpper() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                let strC = ''
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    strC =  strA.toUpperCase()
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strB = document.getElementById('str-b').value
+                    strC =  strB.toUpperCase()
+                    result.innerHTML = strC
+                }
+            }
+
+               // 把所选输入框中的内容全部转为小写
+               function toLower() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                let strC = ''
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    strC =  strA.toLowerCase()
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strB = document.getElementById('str-b').value
+                    strC =  strB.toLowerCase()
+                    result.innerHTML = strC
+                }
+            }
+
+
+            
+               // 把所选输入框中内容的半角空格全部去除
+               function deletSpace() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    console.log(strA)
+                    while (strA.indexOf(' ') != -1) {
+                        strA = strA.replace(' ','')
+                    }
+                    console.log(strA)
+                    result.innerHTML = strA
+                }else if(selectTool() == 'B') {
+                    let strB = document.getElementById('str-b').value
+                    console.log(strB)
+                    while (strB.indexOf(' ') != -1) {
+                        strB = strB.replace(' ','')
+                    }
+                    console.log(strB)
+                    result.innerHTML = strB
+            }}
+
+
+                // 把所选输入框中内容的a全部替换成另外一个输入框中的内容
+                function replaceA() {
+                let numA = document.getElementById('num-a').value
+                let numB = document.getElementById('num-b').value
+                let strC = ''
+                if (selectTool() == 'A') {
+                    let strA = document.getElementById('str-a').value
+                    let strB = document.getElementById('str-b').value
+                    strC =  strA.replace(/a/g,strB)
+                    result.innerHTML = strC
+                }else if(selectTool() == 'B'){
+                    let strA = document.getElementById('str-a').value
+                    let strB = document.getElementById('str-b').value
+                    strC =  strB.replace(/a/g,strA)
+                    result.innerHTML = strC
+                }
+            }
+        }
+    
+    </script>
+</html>

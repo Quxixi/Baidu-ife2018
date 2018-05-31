@@ -1,0 +1,86 @@
+<!-- 数组模拟栈 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+<body>
+        <input id="stack-input" type="text" placeholder="请输入" focus = 'true'>
+        <p id="stack-cont">栈内容：apple-&gt;pear</p>    
+        <button id="push-btn">进栈</button>
+        <button id="pop-btn">退栈</button>
+        <button id="font-btn">打印栈顶元素内容</button>
+        <button id="empty-btn">判断栈是否为空</button>
+</body>
+
+        <script>
+            var stack = ["apple", "pear"];
+            
+            document.getElementById('stack-input').focus()
+            let pushBtn = document.getElementById('push-btn')
+            let popBtn= document.getElementById('pop-btn')
+            let fontBtn = document.getElementById('font-btn')
+            let emptyBtn = document.getElementById('empty-btn')
+
+            pushBtn.addEventListener('click', pushHandle)
+            popBtn.addEventListener('click', popHandle)
+            fontBtn.addEventListener('click', fontHandle)
+            emptyBtn.addEventListener('click', emptyjudge)
+
+            let stackCont = document.getElementById('stack-cont')
+
+             // 检查是否为空值
+            function valueJudgment(params) {
+                let stackInput = document.getElementById('stack-input').value
+                if(stackInput){
+                    return true
+                }else{
+                    return false
+                }
+            }
+
+
+            //进栈
+            function pushHandle(params) {
+                if (valueJudgment()) {
+                let stackInput = document.getElementById('stack-input').value
+                document.getElementById('stack-input').value = ''
+
+                stack.push(stackInput)
+                newStack = stack.join('->')
+                stackCont.innerHTML = '栈内容 : ' + newStack
+                }else{
+                    console.log('没有东西放入栈中哦')
+                }
+            }
+
+
+            //退栈
+            function popHandle(params) {
+                
+                stack.pop()
+                newStack = stack.join('->')
+                stackCont.innerHTML = '栈内容 : ' + newStack
+            }
+
+            // 打印栈顶元素内容
+            function fontHandle(params) {
+                let i = stack.length - 1
+                console.log(stack[i])
+            }
+
+
+            // 判断栈是否为空
+            function emptyjudge(params) {
+                if(stack == undefined || stack.length == 0){
+                    console.log('栈空了')
+                }
+            }
+
+        </script>
+</html>

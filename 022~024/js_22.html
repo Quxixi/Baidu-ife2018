@@ -1,0 +1,208 @@
+<!-- 數字對象的常規方法 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Number</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div>
+            <label>Number A:<input id="radio-a" type="radio" name="math-obj" value="a"></label><input id="num-a" type="text">
+            <label>Number B:<input id="radio-b" type="radio" name="math-obj" value="b"></label><input id="num-b" type="text">
+        </div>
+        <div>
+            <button>判断当前选中的输入框输入内容是否为数字</button>
+            <button>把 A 四舍五入为 B 个小数位数的数字</button>
+            <button>当前选中数字的绝对值</button>
+            <button>对当前选中的数字进行上舍入</button>
+            <button>对当前选中的数字进行下舍入</button>
+            <button>把当前选中的数字四舍五入为最接近的整数</button>
+            <button>返回 A 和 B 中的最高值</button>
+            <button>返回 A 和 B 中的最低值</button>        
+            <button>隨機輸出一個0~1間的隨機數</button>        
+        </div>
+        <p id="result">結果是:</p>
+</body>
+
+    <script>
+        window.onload = function(){
+
+             let btnBox = document.getElementsByTagName('button')
+             let result = document.getElementById('result')
+             btnBox[0].addEventListener('click', isNumber)
+             btnBox[1].addEventListener('click', roundAtoB)
+             btnBox[2].addEventListener('click', absolute)
+             btnBox[3].addEventListener('click', ceil)
+             btnBox[4].addEventListener('click', floor)
+             btnBox[5].addEventListener('click', round)
+             btnBox[6].addEventListener('click', munMax)
+             btnBox[7].addEventListener('click', munmin)
+             btnBox[8].addEventListener('click', random)
+         
+    // 判断当前选中的输入框输入内容是否为数字
+       function isNumber(params) {
+            let radioA = document.getElementById('radio-a')
+            let radioB = document.getElementById('radio-b')
+            if (radioA.checked == true) {
+                let numA = document.getElementById('num-a').value
+                if(!isNaN(numA)){
+                    console.log('是數字')
+                    return true
+                }else{
+                    console.log('不是數字')
+                    return false
+                }
+            }else if (radioB.checked == true){
+                let numB = document.getElementById('num-b').value
+                if(!isNaN(numB)){
+                    console.log('是數字')
+                    return true
+                }else{
+                    console.log('不是數字')
+                    return false
+                }
+            }
+        }
+        // 判斷數字工具
+        function numTool(){
+            let numA = document.getElementById('num-a').value
+            let numB = document.getElementById('num-b').value
+            if (isNaN(numA) || isNaN(numB)) {
+                console.log('空格內需要輸入數字哦')
+                return false
+            }else{
+                return true
+            }
+        }
+        //判斷選中工具
+        function selectTool() {
+            let radioA = document.getElementById('radio-a')
+            let radioB = document.getElementById('radio-b')
+            if (radioA.checked == true) {
+                return "A"
+                
+            }else if (radioB.checked == true){
+                return "B"
+            }
+        }
+       
+
+        // 把 A 四舍五入为 B 个小数位数的数字
+        function roundAtoB() {
+            if ( numTool()) {
+                let numA = parseFloat(document.getElementById('num-a').value)
+                let numB = parseInt(document.getElementById('num-b').value)
+                result.innerHTML = `結果是: ${numA.toFixed(numB)}`
+                console.log(1)
+            }
+
+        }
+
+        // 獲得絕對值
+        function absolute(){
+            if (numTool()){
+                if (selectTool() == 'A') {
+                    let numA = document.getElementById('num-a').value
+                    result.innerHTML = `結果是: ${Math.abs(numA)}`
+                }else if(selectTool() == 'B'){
+                    let numB = document.getElementById('num-b').value
+                    result.innerHTML = `結果是: ${Math.abs(numB)}`
+
+                }
+            }
+        } 
+
+        //上捨入
+        function ceil(params) {
+            if (numTool()){
+                if (selectTool() == 'A') {
+                    let numA = document.getElementById('num-a').value
+                    result.innerHTML = `結果是: ${Math.ceil(numA)}`
+                }else if(selectTool() == 'B'){
+                    let numB = document.getElementById('num-b').value
+                    result.innerHTML = `結果是: ${Math.ceil(numB)}`
+
+                }
+            }
+        }
+
+          //下捨入
+          function floor(params) {
+            if (numTool()){
+                if (selectTool() == 'A') {
+                    let numA = document.getElementById('num-a').value
+                    result.innerHTML = `結果是: ${Math.floor(numA)}`
+                }else if(selectTool() == 'B'){
+                    let numB = document.getElementById('num-b').value
+                    result.innerHTML = `結果是: ${Math.floor(numB)}`
+
+                }
+            }
+        }
+
+          //四捨五入為距離最近的值
+          function round(params) {
+            if (numTool()){
+                if (selectTool() == 'A') {
+                    let numA = document.getElementById('num-a').value
+                    result.innerHTML = `結果是: ${Math.round(numA)}`
+                }else if(selectTool() == 'B'){
+                    let numB = document.getElementById('num-b').value
+                    result.innerHTML = `結果是: ${Math.round(numB)}`
+
+                }
+            }
+        }
+
+         //求取最大值
+         function munMax(params) {
+            if (numTool()){
+                let numA = parseInt(document.getElementById('num-a').value)
+                let numB = parseInt(document.getElementById('num-b').value)
+                if (!isNaN(numA) && !isNaN(numB)) {
+                if (numA > numB) {
+                    
+                    result.innerHTML = `結果是: ${numA}`
+                }else if(numA < numB){
+                    
+                    result.innerHTML = `結果是: ${numB}`
+
+                }else{
+                    result.innerHTML = `結果是: 相等的`
+                }
+            }else{
+                result.innerHTML = `結果是: 有一個空未填寫數字,無法對比`
+            }
+        }
+        }
+
+          //求取最小值
+          function munmin(params) {
+            if (numTool()){
+                let numA = parseInt(document.getElementById('num-a').value)
+                let numB = parseInt(document.getElementById('num-b').value)
+                if (isNaN(numA) || isNaN(numB)) {
+                    result.innerHTML = `結果是: 有一個空未填寫數字,無法對比`
+                }else{
+                    result.innerHTML = `結果是: ${Math.min(numA, numB)}`
+                }
+
+                }
+        }
+
+         //輸出一個隨機數
+         function random(params) {
+                let numA = parseInt(document.getElementById('num-a').value)
+                let numB = parseInt(document.getElementById('num-b').value)
+
+                    result.innerHTML = `結果是: ${Math.random()}`
+    
+        }
+
+    }
+       
+    </script>
+</html>

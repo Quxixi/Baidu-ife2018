@@ -1,0 +1,95 @@
+<!-- 数组模拟队列 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+<body>
+        <input id="queue-input" type="text" placeholder="请输入">
+        <p id="queue-cont">队列内容：apple-&gt;pear</p>    
+        <button id="in-btn">入队</button>
+        <button id="out-btn">出队</button>
+        <button id="font-btn">打印队头元素内容</button>
+        <button id="empty-btn">判断队列是否为空</button>
+
+</body>
+
+    <script>
+        let inBtn = document.getElementById('in-btn')
+        let outBtn= document.getElementById('out-btn')
+        let fontBtn = document.getElementById('font-btn')
+        let iemptyBtn = document.getElementById('empty-btn')
+
+        inBtn.addEventListener('click', inHandle)
+        outBtn.addEventListener('click', outHandle)
+        fontBtn.addEventListener('click', fontHandle)
+        iemptyBtn.addEventListener('click', emptyJudge)
+
+        let queueCont = document.getElementById('queue-cont')
+        var queue = ["apple", "pear"];
+       
+        // 检查是否为空值
+        function valueJudgment(params) {
+            let queueInput = document.getElementById('queue-input').value
+            if(queueInput){
+                return true
+            }else{
+                return false
+            }
+        }
+
+        // 入队
+        function inHandle(params) {
+            let queueInput = document.getElementById('queue-input').value
+            if(valueJudgment()){
+                // 思路: 1.循环插入更改innerHTML(数组转字符串)2.创造新的DOM节点插入
+                // 怎样才能将一个数组的内容动态的显示到网页上能
+                queue.unshift(queueInput)
+                document.getElementById('queue-input').value = ''
+                document.getElementById('queue-input').focus()
+                
+                var element = ''
+                for (let i = 0; i < queue.length; i++) {
+                    element = element + queue[i] + '-&gt;' 
+                    
+                }
+                queueCont.innerHTML = '队列内容：' + element
+            }else{
+                console.log('请输入内容')
+            }
+        }
+
+        //出队
+        function outHandle(params) {
+            
+                queue.pop()
+                console.log(queue)
+                element = queue.join('->')
+                
+                queueCont.innerHTML = '队列内容：' + element
+        }
+
+
+        //打印队头元素内容
+        function fontHandle(){
+                let i = queue.length - 1
+                console.log(queue[i])
+        }
+        
+
+        //判断队列是否为空
+        function emptyJudge(params) {
+            if (queue == undefined || queue.length == 0) {
+                console.log('队列空啦')
+            }else{
+                console.log('队列里面有货呐')
+            }
+        }
+
+    </script>
+</html>
