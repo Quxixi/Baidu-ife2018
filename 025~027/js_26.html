@@ -1,0 +1,88 @@
+<!-- 日期对象1 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+    <div id="text"></div>
+    <div id="text2"></div>
+
+    
+    <script>
+        
+      
+
+        function outHandle() {
+        let newDate = new Date()
+        let newYear = newDate.getFullYear()
+        let newMonth = newDate.getMonth() + 1
+        // 获取日子
+        let myDate = checkTime(newDate.getDate())
+        // 获得当前星期
+        let newDay = newDate.getDay()
+        let newWeek = getWeek(newDay)
+        let newWeekEn = getWeekEn(newDay)
+        let newHours = checkTime(newDate.getHours())
+        let newMinutes = checkTime(newDate.getMinutes())
+        let newSeconds = checkTime(newDate.getSeconds())
+        let ampm = judgeAmPm()
+       
+        function getWeek(pday) {         
+            let arr = [
+                '星期天',    
+                '星期一',
+                '星期二',
+                '星期三',
+                '星期四',
+                '星期五',
+                '星期六'
+            ]
+            return arr[pday]
+        }
+
+        function getWeekEn(pday) {         
+            let arr = [
+                'Sunday',    
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday'
+            ]
+            return arr[pday]
+        }
+
+        function checkTime(n) {
+            if (n < 10) {
+                n = '0' + n
+            }
+                return n
+            
+        }
+
+        function judgeAmPm() {
+            let newHours = newDate.getHours()
+            if(newHours < 12){
+                return 'AM'
+            }else{
+                return 'PM'
+            }
+        }
+        
+
+        document.getElementById('text').innerHTML = `${newYear}年${newMonth}月${myDate}日 ${newWeek} ${newHours}:${newMinutes}:${newSeconds}`
+        document.getElementById('text2').innerHTML = `${newYear}-${newMonth}-${myDate}日 ${newWeekEn} ${newHours}:${newMinutes}:${newSeconds}${ampm}`
+        }
+
+        setInterval(outHandle, 500)
+        
+    </script>
+</body>
+</html>

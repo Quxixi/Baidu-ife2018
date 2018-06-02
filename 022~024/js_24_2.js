@@ -133,7 +133,9 @@ var menuArr = [
 // }
 
 
-//未完成
+
+
+//未完成需要查看
 function toObject(params) {
     var scoreObject = {}
     for(let i of params){
