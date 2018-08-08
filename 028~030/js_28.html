@@ -1,0 +1,214 @@
+<!-- 基础综合 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        html{
+            font-size: 62.5%;
+        }
+        #email-input{
+            border: 1px solid #999;
+            width: 250px;
+            height: 30px;
+            padding-left: 10px;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+            width: 260px;
+            border-left: 1px solid #999;
+            border-right: 1px solid #999;
+            line-height: 30px;
+            overflow: hidden;
+            font-size: 1.4rem;
+        };
+        li{
+            text-decoration: none;
+        }
+
+        .li-style{
+            color: #999; 
+            border-bottom: 1px solid #999; 
+            height: 30px; 
+            padding-left: 10px
+        }
+        
+        /* 不要轻易使用!important增加权重 */
+        .mouseoverColor{
+            cursor: pointer;
+            background-color: #FFC4CF;
+            padding-left: 1.2rem !important;
+            color: rgb(56, 56, 56) !important;
+        }
+        .keySelected{
+            cursor: pointer;
+            background-color: rgb(191, 223, 236);
+            padding-left: 1.2rem !important;
+            color:  rgb(56, 56, 56) !important;
+        }
+        .mouseoutColor{
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+        <div class="wrapper">
+                <input id="email-input" type="text">
+                <ul id="email-sug-wrapper" class="email-sug"></ul>
+        </div>
+    
+</body>
+
+    <script>
+        var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+        var userInput= document.getElementById('email-input')
+        var emailSug = document.querySelector('.email-sug')
+
+        // 增加一个变量，用于存储当前选中的提示Li的序号
+        var nowSelectTipIndex = 0;
+        
+
+
+
+    function getInput(){
+        let inputContent = (userInput.value);
+        return inputContent;
+    }
+
+    function promptContent(input){
+        // var inputVlue = input.replace(/@|\s/g,"");
+        var inputVlue = input.replace(/\s/g,"");
+        inputAt = inputVlue.indexOf('@')
+        if(inputAt>0){
+            inputVlue = inputVlue.slice(0,inputAt)
+            var afterVlue = input.slice(inputAt+1)
+        }
+
+        let sWrapper = document.getElementById('email-sug-wrapper');
+        sWrapper.innerHTML = '';
+
+        for(var item of postfixList){
+        var elem_li = document.createElement('li'); // 生成一个 li元素
+        elem_li.style.cssText = 'color: #999; border-bottom: 1px solid #999; height: 30px; padding-left: 10px';
+        // elem_li.className = 'li-style';
+
+
+        // 判断逻辑:1.@后是否存在字符, 2.存在是否匹配邮箱首字符, 存在则渲染, 不存在则隐藏
+        if(afterVlue){
+            if(afterVlue.charAt(0) == item.charAt(0)){
+            elem_li.innerHTML =  `${inputVlue}@${item}`;
+        }else{
+            elem_li.style = 'display:none';
+        }
+        }else{
+            elem_li.innerHTML =  `${inputVlue}@${item}`;
+        }
+        // 给新生成的li添加鼠标滑动和移出时间
+        sWrapper.appendChild(elem_li); 
+        sWrapper.childNodes[nowSelectTipIndex].classList.add('keySelected');
+        }
+    }
+        // 给ul上添加监听事件
+        emailSug.addEventListener('mouseover', function(e){
+                e.target.className = 'mouseoverColor' 
+            },false)
+        emailSug.addEventListener('mouseout', function(e){
+            e.target.className = 'mouseoutColor'
+        },false)
+        emailSug.addEventListener('click', function(e){
+            emailSug.style.display = 'none';
+            let inputValue = e.target.innerHTML;
+            userInput.value = inputValue;
+        },false)
+        
+
+        //    mouseout事件：不论鼠标指针离开被选元素还是任何子元素，都会触发 mouseout 事件。
+            // mouseleave事件：只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。
+          // 点击document隐藏
+          emailSug.addEventListener('mouseleave', function(){
+            emailSug.style.display = 'none';
+        });
+
+
+    function tipOnOff(){
+        let inputContent = (userInput.value.replace(/\s/g,""));
+        
+        if(inputContent!=0){
+            emailSug.style.display = 'block';
+        }else{
+            emailSug.style.display = 'none';
+        }
+    }
+
+
+
+    // 重置选中状态
+      function resetState(){
+        nowSelectTipIndex = 0;
+    }
+    // 如果按键不是上下及回车重置选中状态
+    function selectFirst() {
+        let firstLi = emailSug.firstChild
+        firstLi.className = 'keySelected';
+        resetState()
+    }
+
+    function keyListener() {
+        document.addEventListener('keyup', function(e){
+            var chilsNum= emailSug.childNodes.length;
+           
+      
+           if(e.keyCode == 38){
+               if(nowSelectTipIndex != 0){
+                   nowSelectTipIndex = chilsNum-1
+               }else{
+                   nowSelectTipIndex -= 1;
+               }
+           }else if(e.keyCode == 40){
+               if(nowSelectTipIndex == chilsNum-1){
+                   nowSelectTipIndex = 0;
+               }else{
+                   nowSelectTipIndex += 1;
+               }
+           }else if(e.keyCode == 13){
+               let inputValue = emailSug.childNodes[nowSelectTipIndex]
+               userInput.value = inputValue;
+               emailSug.style.display = 'none';
+           }
+        })
+       
+         
+    }
+
+
+
+
+
+    // init函数
+    var inputDom = function(e){
+        let input = getInput();
+        if(!(e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 13)){
+            resetState()
+        }
+        
+        promptContent(input)
+        
+        tipOnOff()
+        
+        keyListener()
+
+    }
+
+    userInput.addEventListener('keyup',inputDom)
+
+
+    </script>
+</html>
